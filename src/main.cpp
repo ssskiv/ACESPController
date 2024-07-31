@@ -1,5 +1,6 @@
 #include "../include/requirements.hpp"
 #include "../lib/IRtools.hpp"
+#include "../lib/WiFitools.hpp"
 
 decode_results results;
 
@@ -9,7 +10,7 @@ void setup()
   Serial.begin(115200);
   irsend.begin();
   irrecv.enableIRIn();
-
+  setupWiFi();
   /*
   sendCode(0);
   delay(5000);
@@ -20,4 +21,5 @@ void loop()
 {
   if (irrecv.decode(&results))
     saveCode(&results, 1);
+  loopWiFi();
 }
