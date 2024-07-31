@@ -1,5 +1,5 @@
-#include "requirements.hpp"
-#include "IRtools.hpp"
+#include "../include/requirements.hpp"
+#include "../lib/IRtools.hpp"
 
 decode_results results;
 
