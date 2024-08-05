@@ -1,3 +1,4 @@
+/*
 #include "../include/requirements.hpp"
 
 const char *ssid = "ACAccessPoint";
@@ -14,6 +15,7 @@ String responseHTML = "<!DOCTYPE html><html>"
                       "</style></head>"
                       "<body><h1>ESP32 Web Server</h1>"
                       "<p>Hello World</p>"
+                      "<button type="button">Click Me!</button>"
                       "</body></html>";
 
 void setupWiFi()
@@ -33,4 +35,6 @@ void loopWiFi()
 {
     dnsServer.processNextRequest();
     webServer.handleClient();
+    
 }
+*/

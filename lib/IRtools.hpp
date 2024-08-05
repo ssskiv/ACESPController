@@ -18,11 +18,14 @@ void saveCode(decode_results *res, int idx)
         data.rawCodes[i] = raw_array[i];
     EEPROM.put(idx * X, data);
     EEPROM.commit();
+    delete[] raw_array;
 }
 
 void sendCode(int idx)
 {
+    irrecv.pause();
     irData data;
     EEPROM.get(idx * X, data);
     irsend.sendRaw(data.rawCodes, data.size, 38);
+    irrecv.resume();
 }

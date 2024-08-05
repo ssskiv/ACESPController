@@ -13,8 +13,11 @@
 #include <IRsend.h>
 
 // * dependencies for Wi-Fi AP functions
-#include <WiFi.h>
-#include <DNSServer.h>
-#include <WebServer.h>
+// #include <WiFi.h>
+// #include <DNSServer.h>
+// #include <WebServer.h>
+
+// * LCD 
+#include <LiquidCrystal_I2C.h>
 
 #endif

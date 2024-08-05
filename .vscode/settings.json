@@ -14,5 +14,6 @@
         "optional": "cpp",
         "system_error": "cpp"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "idf.portWin": "COM14"
 }
