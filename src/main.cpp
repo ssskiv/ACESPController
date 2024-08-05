@@ -2,6 +2,7 @@
 #include "../lib/IRtools.hpp"
 #include "../lib/LCDtools.hpp"
 #include "../lib/Enctools.hpp"
+#include "../lib/Sensortools.hpp"
 // #include "../lib/WiFitools.hpp"
 
 //decode_results results;
@@ -15,6 +16,7 @@ void setup()
   irrecv.enableIRIn();
   setupLCD();
   setupEnc(9);
+  //setupSensors();
   // setupWiFi();
 
   // sendCode(3);
@@ -32,6 +34,7 @@ void loop()
   // if (!encoder.busy())
 
   printMenu(counter);
+  Serial.println(String(readTemperature()));
   // nextItem();
 
   // delay(100);//TODO убрать

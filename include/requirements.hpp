@@ -20,4 +20,8 @@
 // * LCD 
 #include <LiquidCrystal_I2C.h>
 
+// * Sensors
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
 #endif

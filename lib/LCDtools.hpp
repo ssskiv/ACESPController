@@ -2,7 +2,7 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-const String menuItems[] = {"info", "save 0", "save 1", "save 2", "save 3", "send 0", "send 1", "send 2", "send 3"};
+const String menuItems[] = {"info", "save 1ON", "save 1OFF", "save 2ON", "save 2OFF", "send 1ON", "send 1OFF", "send 2ON", "send 2OFF"};
 uint8_t len = sizeof(menuItems) / sizeof(menuItems[0]);
 short menuIter = 0;
 short mainMenuIter = 0;
