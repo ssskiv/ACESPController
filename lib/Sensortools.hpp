@@ -1,89 +1,50 @@
 #include "requirements.hpp"
 
-#define TEMP1_PIN 18
+OneWire temp0w(TEMP0_PIN);
+DallasTemperature temp0(&temp0w);
 
-OneWire oneWire(TEMP1_PIN);
+OneWire temp1w(TEMP1_PIN);
+DallasTemperature temp1(&temp1w);
 
-float readTemperature() {
-  byte i;
-  byte present = 0;
-  byte type_s;
-  byte data[12];
-  byte addr[8];
- 
-  // Поиск подключенных датчиков DS18B20 на шине OneWire
-  if (!oneWire.search(addr)) {
-    //Serial.println("Датчики DS18B20 не найдены.");
-    // Сбрасываем поиск и возвращаем "NaN" (не число) в случае ошибки
-    oneWire.reset_search();
-    return NAN;
+OneWire temp2w(TEMP2_PIN);
+DallasTemperature temp2(&temp2w);
+
+float readTemperature(int idx)
+{
+  static uint32_t tmr;
+  if (millis() - tmr >= 800)
+  {
+    Serial.println("Getting temperature...");
+    tmr = millis();
+    float temps[] = {temp0.getTempCByIndex(0), temp1.getTempCByIndex(0), temp2.getTempCByIndex(0)};
+    temp0.requestTemperatures();
+    temp1.requestTemperatures();
+    temp2.requestTemperatures();
+    return temps[idx];
   }
- 
-  // Проверка целостности адреса датчика с помощью CRC
-  if (OneWire::crc8(addr, 7) != addr[7]) {
-    Serial.println("CRC не совпадает!");
-    return NAN;
-  }
- 
-  // Определение типа датчика на основе первого байта адреса
-  switch (addr[0]) {
-    case 0x10:
-      type_s = 1; // DS18S20 или DS1822
-      break;
-    case 0x28:
-    case 0x22:
-      type_s = 0; // DS18B20
-      break;
-    default:
-      Serial.println("Неизвестный тип датчика.");
-      return NAN;
-  }
- 
-  // Сбрасываем шину и выбираем адрес конкретного датчика
-  oneWire.reset();
-  oneWire.select(addr);
-  
-  // Запускаем измерение температуры на датчике
-  oneWire.write(0x44); // 0x44 - команда начать измерение
- 
-  // Ожидание завершения измерения (время зависит от разрешения)
-  delay(1000);
- 
-  // Сбрасываем шину и выбираем адрес датчика для чтения данных
-  present = oneWire.reset();
-  oneWire.select(addr);
-  oneWire.write(0xBE); // 0xBE - команда чтения данных
- 
-  // Считываем 9 байт данных температуры и CRC
-  for (i = 0; i < 9; i++) {
-    data[i] = oneWire.read();
-  }
- 
-  // Преобразование считанных данных в температуру
-  int16_t raw = (data[1] << 8) | data[0];
-  float celsius = 0.0;
- 
-  // Применяем разрешение и коррекцию для разных типов датчиков
-  if (type_s == 1) {
-    raw = raw << 3; // Увеличиваем разрешение до 12 бит
-    if (data[7] == 0x10) {
-      // Температура с высоким разрешением (DS18S20)
-      raw = (raw & 0xFFF0) + 12 - data[6];
-    }
-  } else {
-    byte cfg = (data[4] & 0x60);
-    if (cfg == 0x00) raw = raw & ~7; // Разрешение 9 бит, 93.75 ms
-    else if (cfg == 0x20) raw = raw & ~3; // Разрешение 10 бит, 187.5 ms
-    else if (cfg == 0x40) raw = raw & ~1; // Разрешение 11 бит, 375 ms
-  }
-  celsius = (float)raw / 16.0; // Преобразуем вещественное значение температуры и возвращаем
- 
-  return celsius;
 }
 
 void setupSensors()
 {
-    
+  temp0.begin();
+  temp1.begin();
+  temp2.begin();
+  pinMode(WAT0_PIN, INPUT);
+  pinMode(WAT1_PIN, INPUT);
 }
 
-
+bool readWater(int idx)
+{
+  if (idx == 0)
+  {
+    if (analogRead(WAT0_PIN) <= 1000)
+      return true;
+    return false;
+  }
+  else
+  {
+    if (analogRead(WAT1_PIN) <= 1000)
+      return true;
+    return false;
+  }
+}

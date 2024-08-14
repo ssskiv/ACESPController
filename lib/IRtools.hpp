@@ -1,7 +1,15 @@
 #include "../include/requirements.hpp"
 
 IRrecv irrecv(RCV_PIN, BUF_LEN, 50, true);
-IRsend irsend(SND_PIN);
+IRsend irsend0(SND0_PIN);
+IRsend irsend1(SND1_PIN);
+
+void setupIR()
+{
+    irsend0.begin();
+    irsend1.begin();
+    irrecv.enableIRIn();
+}
 
 struct irData
 {
@@ -21,11 +29,14 @@ void saveCode(decode_results *res, int idx)
     delete[] raw_array;
 }
 
-void sendCode(int idx)
+void sendCode(int idx, int sndIdx)
 {
     irrecv.pause();
     irData data;
     EEPROM.get(idx * X, data);
-    irsend.sendRaw(data.rawCodes, data.size, 38);
+    if (sndIdx == 0)
+        irsend0.sendRaw(data.rawCodes, data.size, 38);
+    else
+        irsend1.sendRaw(data.rawCodes, data.size, 38);
     irrecv.resume();
 }

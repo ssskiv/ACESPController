@@ -68,7 +68,7 @@ void lcdSendCode(int idx)
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Sending...");
-    sendCode(idx);
+    sendCode(idx,0);
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Ready");
