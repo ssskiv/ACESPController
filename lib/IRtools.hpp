@@ -9,6 +9,7 @@ void setupIR()
     irsend0.begin();
     irsend1.begin();
     irrecv.enableIRIn();
+    pinMode(RCV_PIN, INPUT);
 }
 
 struct irData
@@ -34,9 +35,19 @@ void sendCode(int idx, int sndIdx)
     irrecv.pause();
     irData data;
     EEPROM.get(idx * X, data);
+    
     if (sndIdx == 0)
         irsend0.sendRaw(data.rawCodes, data.size, 38);
     else
         irsend1.sendRaw(data.rawCodes, data.size, 38);
     irrecv.resume();
+    Serial.println("sent code "+String(idx)+" from "+sndIdx);
+}
+
+void sendCode(int idx)
+{
+    if (idx == 0 or idx == 1)
+        sendCode(idx, 0);
+    else
+        sendCode(idx, 1);
 }

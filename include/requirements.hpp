@@ -23,5 +23,10 @@
 // * Sensors
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <DHT.h>
+
+// * Ethernet
+#include <Ethernet.h>
+#include <SPI.h>
 
 #endif

@@ -6,22 +6,30 @@ DallasTemperature temp0(&temp0w);
 OneWire temp1w(TEMP1_PIN);
 DallasTemperature temp1(&temp1w);
 
-OneWire temp2w(TEMP2_PIN);
-DallasTemperature temp2(&temp2w);
+
+DHT temp2(TEMP2_PIN, DHT11);
+
+ 
 
 float readTemperature(int idx)
 {
   static uint32_t tmr;
   if (millis() - tmr >= 800)
   {
-    Serial.println("Getting temperature...");
+    //Serial.println("Getting temperature...");
     tmr = millis();
-    float temps[] = {temp0.getTempCByIndex(0), temp1.getTempCByIndex(0), temp2.getTempCByIndex(0)};
+    float temps[] = {temp0.getTempCByIndex(0), temp1.getTempCByIndex(0), temp2.readTemperature()};
     temp0.requestTemperatures();
     temp1.requestTemperatures();
-    temp2.requestTemperatures();
+
     return temps[idx];
   }
+  else
+    return 0;
+}
+
+float readHumidity(){
+  return temp2.readHumidity();
 }
 
 void setupSensors()
@@ -31,6 +39,7 @@ void setupSensors()
   temp2.begin();
   pinMode(WAT0_PIN, INPUT);
   pinMode(WAT1_PIN, INPUT);
+  pinMode(TEMP2_PIN, INPUT);
 }
 
 bool readWater(int idx)

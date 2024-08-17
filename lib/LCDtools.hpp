@@ -14,6 +14,7 @@ void setupLCD()
     lcd.init();
     lcd.backlight();
     lcd.clear();
+    
 }
 
 void printMenu(int selectedPos = mainMenuIter, const String currentMenuItems[] = menuItems)
@@ -68,7 +69,7 @@ void lcdSendCode(int idx)
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Sending...");
-    sendCode(idx,0);
+    sendCode(idx);
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Ready");
@@ -77,7 +78,13 @@ void lcdSendCode(int idx)
 
 void executeItem(int selectedPos = mainMenuIter)
 {
-    Serial.println("Executing " + String(selectedPos));
+    //Serial.println("Executing " + String(selectedPos));
+    if(selectedPos ==0){
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.println(Ethernet.localIP());
+        delay(5000);
+    }
     if (selectedPos >= 1 && selectedPos <= 4)
     {
         lcdSaveCode(selectedPos - 1);

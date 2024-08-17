@@ -24,7 +24,7 @@ void setupEnc(int _limit = COM_COUNT * 2 + 1)
     encoder.setEncISR(true);
 }
 
-void loopEnc()
+bool loopEnc()
 {
 
     if (encoder.tick())
@@ -36,13 +36,15 @@ void loopEnc()
                 counter = 0;
             else if (counter < 0)
                 counter = limit;
-            // Serial.println(counter);
+            // //Serial.println(counter);
         }
         if (encoder.click())
         {
             executeItem( counter);
-            Serial.println("Clicked");
+            //Serial.println("Clicked");
         }
-        Serial.println(encoder.action());
+        //Serial.println(encoder.action());
+        return true;
     }
+    return false;
 }
