@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "../Documents/PlatformIO/Projects/Name"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.tcc": "cpp",
+			"streambuf": "cpp",
+			"array": "cpp",
+			"functional": "cpp",
+			"istream": "cpp",
+			"ostream": "cpp",
+			"tuple": "cpp",
+			"type_traits": "cpp",
+			"utility": "cpp",
+			"string": "cpp",
+			"string_view": "cpp",
+			"optional": "cpp",
+			"system_error": "cpp"
+		}
+	}
+}
