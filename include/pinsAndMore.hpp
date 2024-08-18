@@ -10,10 +10,12 @@ const int X = BUF_LEN * 2 + 2;
 
 
 #define TEMP0_PIN 26
-#define TEMP1_PIN 12
+#define TEMP1_PIN 13
 #define TEMP2_PIN 27
 
 #define WAT0_PIN 35
 #define WAT1_PIN 34
+
+#define VALID        0xB0070000
 
 #endif

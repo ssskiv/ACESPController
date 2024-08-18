@@ -182,4 +182,5 @@
  .pio/libdeps/esp32dev/EncButton/src/core/Button.h \
  .pio/libdeps/esp32dev/EncButton/src/core/Encoder.h \
  .pio/libdeps/esp32dev/EncButton/src/core/EncButton.h \
- src/../lib/Sensortools.hpp src/../lib/Ethtools.hpp
+ src/../lib/../lib/Ethtools.hpp src/../lib/Sensortools.hpp \
+ src/../lib/Ethtools.hpp

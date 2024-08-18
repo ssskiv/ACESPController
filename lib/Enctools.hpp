@@ -1,6 +1,7 @@
 #include "requirements.hpp"
 
 #include <EncButton.h>
+#include "../lib/Ethtools.hpp"
 
 #define DT 33
 #define CLK 32
@@ -40,10 +41,12 @@ bool loopEnc()
         }
         if (encoder.click())
         {
-            executeItem( counter);
-            //Serial.println("Clicked");
+            executeItem(counter);
+            // Serial.println("Clicked");
         }
-        //Serial.println(encoder.action());
+        if (encoder.holdFor(5000))
+            setDefaultConf();
+        // Serial.println(encoder.action());
         return true;
     }
     return false;
